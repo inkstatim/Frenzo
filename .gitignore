@@ -1,3 +1,5 @@
 local_settings.py
 .idea
 .gitignore
+cert.crt
+cert.key
