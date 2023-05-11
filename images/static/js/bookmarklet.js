@@ -16,3 +16,20 @@ head.appendChild(link);
 var body = document.getElementsByTagName('body')[0];
 boxHtml = ' <div id = "bookmarklet"> <a href = "#" id = "close"> & times; </a> <h1>Select an image to bookmark:</h1> <div class="images"></div> </div>';
 body.innerHTML += boxHtml;
+
+function bookmarkletLaunch() {
+    bookmarklet = document.getElementById('bookmarklet');
+    var imagesFound = bookmarklet.querySelector('.images');
+    // очистить найденные изображения
+    imagesFound.innerHTML = '';
+    // показать букмарклет
+    bookmarklet.style.display = 'block';
+    // событие закрытия
+    bookmarklet.querySelector('#close')
+        .addEventListener('click', function () {
+            bookmarklet.style.display = 'none'
+        });
+}
+
+// запустить букмарклет
+bookmarkletLaunch();
