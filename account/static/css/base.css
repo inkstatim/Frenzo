@@ -275,3 +275,7 @@ img.user-detail {
     font-style:italic;
     color:#ccc;
 }
+.post-photo {
+    max-width: 350px;
+    max-height: 300px;
+}
