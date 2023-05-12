@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Post List</h2>
+    {% for post in post_list %}
+        <div class="post">
+            <h3><a href="{% url 'posts:post_detail' post.pk %}">{{ post.title }}</a></h3>
+            <p>{{ post.content }}</p>
+            <p>{% if post.photo %}
+                <img src="{{ post.photo.url }}" alt="Post Photo" class="post-photo" width="300" height="auto">
+            {% endif %}</p>
+            <p>Author: {{ post.author }}</p>
+            <p>Likes: {{ post.likes.count }}</p>
+            <form method="post" action="{% url 'posts:comment_create' post.id %}">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit">Add Comment</button>
+            </form>
+            <h4>Comments:</h4>
+            {% for comment in post.comments.all %}
+                <div class="comment">
+                    <p>{{ comment.content }}</p>
+                    <p>By: {{ comment.author }}</p>
+                </div>
+            {% empty %}
+                <p>No comments yet.</p>
+            {% endfor %}
+        </div>
+        <hr>
+    {% empty %}
+        <p>No posts available.</p>
+    {% endfor %}
+{% endblock %}
