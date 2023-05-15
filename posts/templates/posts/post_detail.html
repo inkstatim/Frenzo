@@ -2,16 +2,33 @@
 
 {% block content %}
     <h2>{{ post.title }}</h2>
-    <p>Author: {{ post.author }}</p>
+    <p class="date"> Published {{ post.created_at }} by {{ post.author }} </p>
     <p>{{ post.content }}</p>
     <p>{% if post.photo %}
         <img src="{{ post.photo.url }}" alt="Post Photo" class="post-photo" width="700" height="auto">
     {% endif %}</p>
     <p>Likes: {{ post.likes.count }}</p>
+    <form method="post" action="{% url 'posts:like_post' post.id %}">
+        {% csrf_token %}
+        <button type="submit">
+            {% if request.user in post.likes.all %}
+                Unlike
+            {% else %}
+                Like
+            {% endif %}
+        </button>
+    </form>
     <h3>Comments:</h3>
     {% for comment in post.comments.all %}
-        <p>{{ comment.content }}</p>
-        <p>By: {{ comment.author }}</p>
+        <div class="comment">
+            <div class="comment-header">
+                <p class="comment-author">{{ comment.author }}</p>
+            </div>
+            <div class="comment-content">
+                <p>{{ comment.content }}</p>
+            </div>
+        </div>
+        <hr class="comment-separator">
     {% empty %}
         <p>No comments yet.</p>
     {% endfor %}

@@ -1,5 +1,12 @@
 @import url(//fonts.googleapis.com/css?family=Muli);
 
+p.date {
+    color:#ccc;
+    font-family: georgia, serif;
+    font-size: 12px;
+    font-style: italic;
+}
+
 body {
     margin:0;
     padding:0;
@@ -278,4 +285,35 @@ img.user-detail {
 .post-photo {
     max-width: 350px;
     max-height: 300px;
+}
+
+.comment {
+    background-color: #f2f2f2;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: darkgreen;
+}
+
+.comment-content {
+    padding-top: 5px;
+}
+
+.comment-separator {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+.separator {
+    color: #00ff2c;
 }

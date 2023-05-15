@@ -11,16 +11,16 @@
                 <img src="{{ post.photo.url }}" alt="Post Photo" class="post-photo" width="300" height="auto">
             {% endif %}</p>
             <p>Likes: {{ post.likes.count }}</p>
-             <form method="post" action="{% url 'posts:like_post' post.id %}">
-            {% csrf_token %}
-            <button type="submit">
-                {% if request.user in post.likes.all %}
-                    Unlike
-                {% else %}
-                    Like
-                {% endif %}
-            </button>
-        </form>
+            <form method="post" action="{% url 'posts:like_post' post.id %}">
+                {% csrf_token %}
+                <button type="submit">
+                    {% if request.user in post.likes.all %}
+                        Unlike
+                    {% else %}
+                        Like
+                    {% endif %}
+                </button>
+            </form>
             <form method="post" action="{% url 'posts:comment_create' post.id %}">
                 {% csrf_token %}
                 {{ comment_form.as_p }}
@@ -29,14 +29,19 @@
             <h4>Comments:</h4>
             {% for comment in post.get_display_comments %}
                 <div class="comment">
-                    <p>{{ comment.content }}</p>
-                    <p>By: {{ comment.author }}</p>
+                    <div class="comment-header">
+                        <p class="comment-author">{{ comment.author }}</p>
+                    </div>
+                    <div class="comment-content">
+                        <p>{{ comment.content }}</p>
+                    </div>
                 </div>
+                <hr class="comment-separator">
             {% empty %}
                 <p>No comments yet.</p>
             {% endfor %}
         </div>
-        <hr>
+        <hr class="separator">
     {% empty %}
         <p>No posts available.</p>
     {% endfor %}
