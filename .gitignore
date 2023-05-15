@@ -3,3 +3,4 @@ local_settings.py
 .gitignore
 cert.crt
 cert.key
+media
