@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
@@ -64,4 +65,33 @@ def edit(request):
     else:
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
-    return render(request,'account/edit.html', {'user_form': user_form,'profile_form': profile_form})
+    return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
+
+
+@login_required
+def profile(request, username):
+    user = get_object_or_404(User, username=username)
+    return render(request, 'account/profile.html', {'user': user})
+
+@login_required
+def follow(request, username):
+    user = get_object_or_404(User, username=username)
+
+    if request.method == 'POST':
+        if request.user != user:
+            if request.user.profile.following.filter(profile__user=user).exists():
+
+                request.user.profile.following.remove(user)
+                user.profile.followers.remove(request.user)
+            else:
+                request.user.profile.following.add(user)
+                user.profile.followers.add(request.user)
+
+        return redirect('account:profile', username=username)
+
+    return HttpResponse("Invalid request")
+
+
+def user_list(request):
+    users = User.objects.all()
+    return render(request, 'account/user_list.html', {'users': users})
