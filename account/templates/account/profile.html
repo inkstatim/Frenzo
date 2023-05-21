@@ -11,12 +11,12 @@
 
     {% if user != request.user %}
         {% if user.profile in request.user.profile.following.all %}
-            <form method="post" action="{% url 'account:follow' user.username %}">
+            <form method="post" action="{% url 'follow' user.username %}">
                 {% csrf_token %}
                 <button type="submit">Unfollow</button>
             </form>
         {% else %}
-            <form method="post" action="{% url 'account:follow' user.username %}">
+            <form method="post" action="{% url 'follow' user.username %}">
                 {% csrf_token %}
                 <button type="submit">Follow</button>
             </form>

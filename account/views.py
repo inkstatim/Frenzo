@@ -87,7 +87,7 @@ def follow(request, username):
                 request.user.profile.following.add(user)
                 user.profile.followers.add(request.user)
 
-        return redirect('account:profile', username=username)
+        return redirect('profile', username=username)
 
     return HttpResponse("Invalid request")
 
