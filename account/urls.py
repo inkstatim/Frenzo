@@ -2,6 +2,9 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from . import views
 
+app_name = 'account'
+
+
 urlpatterns = [
     # предыдущий url входа
     # path('login/', views.user_login, name='login'),
@@ -21,5 +24,7 @@ urlpatterns = [
     path('', views.dashboard, name='dashboard'),
     path('register/', views.register, name='register'),
     path('edit/', views.edit, name='edit'),
-
+    path('profile/<str:username>/', views.profile, name='profile'),
+    path('follow/<str:username>/', views.follow, name='follow'),
+    path('users/', views.user_list, name='user_list'),
 ]
