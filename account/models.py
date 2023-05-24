@@ -12,4 +12,32 @@ class Profile(models.Model):
     def __str__(self):
         return f'Profile of {self.user.username}'
 
+
+class Friendship(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
+    )
+
+    from_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+                                  related_name='friend_requests_sent')
+    to_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+                                related_name='friend_requests_received')
+    created = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+
+    class Meta:
+        unique_together = ['from_user', 'to_user']
+
+
 # Create your models here.
+
+class Message(models.Model):
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='sent_messages')
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='received_messages')
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Message from {self.sender} to {self.recipient}'
