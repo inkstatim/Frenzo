@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{{ user.username }}</h1>
+    <h1>{{ user.username }}
+        <form method="post" action="{% url 'conversation' recipient_id=user.id %}">
+            {% csrf_token %}
+            <button type="submit">Send Message</button>
+        </form>
+    </h1>
     <p>Date of Birth: {{ user.profile.date_of_birth }}</p>
     <p>First Name: {{ user.first_name }}</p>
     <p>Last Name: {{ user.last_name }}</p>
@@ -10,7 +15,7 @@
     {% endif %}
 
     {% if user != request.user %}
-        {% if user.profile in request.user.profile.following.all %}
+        {% if user in request.user.profile.following.all %}
             <form method="post" action="{% url 'follow' user.username %}">
                 {% csrf_token %}
                 <button type="submit">Unfollow</button>
@@ -21,6 +26,31 @@
                 <button type="submit">Follow</button>
             </form>
         {% endif %}
-    {% endif %}
 
+        <br>
+        {% if request.user.profile in user.profile.followers_requests.all %}
+            <p>Friendship request received</p>
+            <form method="post" action="{% url 'accept_friend_request' request.user.id %}">
+                {% csrf_token %}
+                <button type="submit">Accept friend request</button>
+            </form>
+            <form method="post" action="{% url 'reject_friend_request' request.user.id %}">
+                {% csrf_token %}
+                <button type="submit">Reject friend request</button>
+            </form>
+        {% else %}
+            <form method="post" action="{% url 'send_friend_request' user.id %}">
+                {% csrf_token %}
+                <button type="submit">Send friend request</button>
+            </form>
+        {% endif %}
+
+
+            <br>
+            <form method="post" action="{% url 'conversation' recipient_id=user.id %}">
+                {% csrf_token %}
+                <button type="submit">Send Message</button>
+            </form>
+
+    {% endif %}
 {% endblock %}
