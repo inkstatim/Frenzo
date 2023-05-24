@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Conversation with {{ recipient.username }}</h1>
+
+    <!-- Отображение сообщений -->
+    {% for message in messages %}
+        <p>{{ message.content }}</p>
+        <p>Sender: {{ message.sender.username }}</p>
+        <p>Timestamp: {{ message.timestamp }}</p>
+        <hr>
+    {% endfor %}
+
+    <!-- Форма для отправки сообщения -->
+    <h2>Send Message</h2>
+    <form method="post" action="{% url 'create_message' recipient.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send Message</button>
+    </form>
+{% endblock %}
