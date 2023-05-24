@@ -317,3 +317,8 @@ img.user-detail {
 .separator {
     color: #00ff2c;
 }
+
+.friend-photo {
+    width: 100px; /* Задайте желаемую ширину */
+    height: auto; /* Высота будет автоматически рассчитана пропорционально */
+}
