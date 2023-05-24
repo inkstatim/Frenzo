@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Message
 
 
 class LoginForm(forms.Form):
@@ -36,7 +36,7 @@ class UserEditForm(forms.ModelForm):
 
     def clean_email(self):
         data = self.cleaned_data['email']
-        qs= User.objects.exclude(id=self.instance.id).filter(email=data)
+        qs = User.objects.exclude(id=self.instance.id).filter(email=data)
         if qs.exists():
             raise forms.ValidationError('Email already in use.')
         return data
@@ -49,3 +49,8 @@ class ProfileEditForm(forms.ModelForm):
         model = Profile
         fields = ['date_of_birth', 'photo']
 
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['content']
