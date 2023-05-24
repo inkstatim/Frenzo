@@ -22,6 +22,9 @@
             <li {% if section == "posts" %}class="selected"{% endif %}>
                 <a href="{% url "posts:post_create" %}">Add Post</a>
             </li>
+            <li {% if section == "friends" %}class="selected"{% endif %}>
+                <a href="{% url "friend_list" %}">Friends</a>
+            </li>
         </ul>
     {% endif %}
     <span class="user">
