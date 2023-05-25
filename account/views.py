@@ -94,7 +94,6 @@ def follow(request, username):
     return HttpResponse("Invalid request")
 
 
-
 def user_list(request):
     users = User.objects.all()
     return render(request, 'account/user_list.html', {'users': users})
@@ -169,3 +168,15 @@ def conversation(request, recipient_id):
 
     context = {'recipient': recipient, 'messages': messages, 'form': form}
     return render(request, 'account/conversation.html', context)
+
+
+def followers_view(request, username):
+    user = User.objects.get(username=username)
+    followers = user.profile.followers.all()
+    return render(request, 'account/followers.html', {'followers': followers})
+
+
+def following_view(request, username):
+    user = User.objects.get(username=username)
+    following = user.profile.following.all()
+    return render(request, 'account/following.html', {'following': following})
