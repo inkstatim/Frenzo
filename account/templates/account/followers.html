@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Followers{% endblock %}
+
+{% block content %}
+    <h1>Followers</h1>
+    <div class="friend-list">
+        {% for follower in followers %}
+            <div class="friend-card">
+                {% if follower.profile.photo %}
+                    <img class="profile-photo" src="{{ follower.profile.photo.url }}" alt="Profile Photo">
+                {% else %}
+                    <img class="profile-photo" src="{% static 'images/default-avatar.png' %}" alt="Default Avatar">
+                {% endif %}
+                <h3><a href="{% url 'profile' follower.username %}">{{ follower.username }}</a></h3>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
