@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
     <h2>Registered Users</h2>
-    <ul>
+    <div class="friend-list">
         {% for user in users %}
-            <li><a href="{% url 'profile' username=user.username %}">{{ user.username }}</a></li>
+            <div class="friend-card">
+                {% if user.profile.photo %}
+                    <img class="profile-photo" src="{{ user.profile.photo.url }}" alt="Profile Photo">
+                {% else %}
+                    <img class="profile-photo" src="{% static 'images/default-avatar.png' %}" alt="Default Avatar">
+                {% endif %}
+                <h3><a href="{% url 'profile' username=user.username %}">{{ user.username }}</a></h3>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}
