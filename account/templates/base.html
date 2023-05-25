@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,19 +37,36 @@
         {% endif %}
     </span>
 </div>
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li class="{{ message.tags }}">
-                {{ message|safe }}
-                <a href="#" class="close">x</a>
+
+<div id="content-container">
+    <div id="sidebar">
+        <ul class="sidebar-menu">
+            <li {% if section == "chat" %}class="selected"{% endif %}>
+                <a href="#">Chat</a>
             </li>
-        {% endfor %}
-    </ul>
-{% endif %}
-<div id="content">
-    {% block content %}
-    {% endblock %}
+            <li {% if section == "followers" %}class="selected"{% endif %}>
+                <a href="{% url "followers" user.username %}">Followers</a>
+            </li>
+            <li {% if section == "following" %}class="selected"{% endif %}>
+                <a href="{% url "following" user.username  %}">Following</a>
+            </li>
+        </ul>
+    </div>
+    <div id="content-acc">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">
+                        {{ message|safe }}
+                        <a href="#" class="close">x</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+    </div>
 </div>
+
 </body>
 </html>
