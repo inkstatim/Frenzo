@@ -16,4 +16,6 @@ urlpatterns = [
     path('friends/', views.friend_list, name='friend_list'),
     path('message/create/<int:recipient_id>/', views.create_message, name='create_message'),
     path('conversation/<int:recipient_id>/', views.conversation, name='conversation'),
+    path('followers/<str:username>/', views.followers_view, name='followers'),
+    path('following/<str:username>/', views.following_view, name='following'),
 ]
