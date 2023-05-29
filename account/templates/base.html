@@ -39,19 +39,22 @@
 </div>
 
 <div id="content-container">
-    <div id="sidebar">
-        <ul class="sidebar-menu">
-            <li {% if section == "chat" %}class="selected"{% endif %}>
-                <a href="#">Chat</a>
-            </li>
-            <li {% if section == "followers" %}class="selected"{% endif %}>
-                <a href="{% url "followers" user.username %}">Followers</a>
-            </li>
-            <li {% if section == "following" %}class="selected"{% endif %}>
-                <a href="{% url "following" user.username  %}">Following</a>
-            </li>
-        </ul>
-    </div>
+    {% if user.is_authenticated %}
+        <div id="sidebar">
+            <ul class="sidebar-menu">
+
+                <li {% if section == "chat" %}class="selected"{% endif %}>
+                    <a href="#">Chat</a>
+                </li>
+                <li {% if section == "followers" %}class="selected"{% endif %}>
+                    <a href="{% url "followers" user.username %}">Followers</a>
+                </li>
+                <li {% if section == "following" %}class="selected"{% endif %}>
+                    <a href="{% url "following" user.username %}">Following</a>
+                </li>
+            </ul>
+        </div>
+    {% endif %}
     <div id="content-acc">
         {% if messages %}
             <ul class="messages">
