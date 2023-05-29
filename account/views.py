@@ -169,13 +169,13 @@ def conversation(request, recipient_id):
     context = {'recipient': recipient, 'messages': messages, 'form': form}
     return render(request, 'account/conversation.html', context)
 
-
+@login_required
 def followers_view(request, username):
     user = User.objects.get(username=username)
     followers = user.profile.followers.all()
     return render(request, 'account/followers.html', {'followers': followers})
 
-
+@login_required
 def following_view(request, username):
     user = User.objects.get(username=username)
     following = user.profile.following.all()
