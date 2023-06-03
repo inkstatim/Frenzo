@@ -17,11 +17,6 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    def get_display_comments(self):
-        return self.comments.all()[:3]
-
-
-# Create your models here.
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments',
@@ -30,3 +25,7 @@ class Comment(models.Model):
                                on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    @staticmethod
+    def get_post_comments(post_id):
+        return Comment.objects.filter(post_id=post_id)[:3]
