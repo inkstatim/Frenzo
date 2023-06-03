@@ -28,7 +28,7 @@
                 <button type="submit">Add Comment</button>
             </form>
             <h4>Comments:</h4>
-            {% for comment in post.get_display_comments %}
+            {% for comment in post.comments.all|slice:":3" %}
                 <div class="comment">
                     <div class="comment-header">
                         <p class="comment-author">{{ comment.author }}</p>
@@ -48,21 +48,3 @@
     {% endfor %}
     <p>You can <a href="{% url 'edit' %}">edit your profile</a> or <a href="{% url 'password_change' %}">change your password</a>.</p>
 {% endblock %}
-
-
-
-
-
-
-{#{% extends "base.html" %}#}
-{##}
-{#{% block title %}Dashboard{% endblock %}#}
-{##}
-{#{% block content %}#}
-{#    <h1>Dashboard</h1>#}
-{#    <p>Welcome to your dashboard. You can <a href="{% url 'edit' %}">edit your profile</a>#}
-{#        or <a href="{% url 'password_change' %}">change your password</a>.</p>#}
-{#    <p>You can also <a href="{% url "edit" %}">edit your profile</a> or <a href="{% url "password_change" %}">#}
-{#        change your password</a>.#}
-{#    </p>#}
-{#{% endblock %}#}
