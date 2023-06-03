@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from posts.froms import CommentForm
-from posts.models import Post
+from posts.models import Post, Comment
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, \
     ProfileEditForm, MessageForm
 from .models import Profile, Friendship, Message
@@ -40,7 +40,13 @@ class DashboardView(LoginRequiredMixin, View):
         following = user.profile.following.all()
         posts = Post.objects.filter(author__in=following)
         comment_form = CommentForm()
-        return render(request, 'account/dashboard.html', {'posts': posts, 'comment_form': comment_form})
+        comments = {}
+
+        for post in posts:
+            comments[post.id] = Comment.objects.filter(post=post)[:3]
+
+        return render(request, 'account/dashboard.html', {'posts': posts, 'comment_form': comment_form, 'comments': comments})
+
 
 
 class UserRegistrationView(View):
