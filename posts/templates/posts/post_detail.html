@@ -5,7 +5,7 @@
     <p class="date"> Published {{ post.created_at }} by {{ post.author }} </p>
     <p>{{ post.content }}</p>
     <p>{% if post.photo %}
-        <img src="{{ post.photo.url }}" alt="Post Photo" class="post-photo" width="700" height="auto">
+        <img src="{{ post.photo.url }}" alt="Post Photo" class="post-photo" width="900" height="auto">
     {% endif %}</p>
     <p>Likes: {{ post.likes.count }}</p>
     <form method="post" action="{% url 'posts:like_post' post.id %}">
