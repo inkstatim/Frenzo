@@ -63,6 +63,7 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
         context['comment_form'] = CommentForm()
         return context
 
+
 class LikePostView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         post = get_object_or_404(Post, pk=self.kwargs['post_id'])
@@ -72,4 +73,4 @@ class LikePostView(LoginRequiredMixin, View):
         else:
             post.likes.add(user)
 
-        return redirect('posts:post_list')
+        return redirect(request.META.get('HTTP_REFERER'))

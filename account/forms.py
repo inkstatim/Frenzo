@@ -9,8 +9,10 @@ class LoginForm(forms.Form):
 
 
 class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput)
+    password = forms.CharField(label='Password',
+                               widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Repeat password',
+                                widget=forms.PasswordInput)
 
     class Meta:
         model = User
@@ -43,7 +45,8 @@ class UserEditForm(forms.ModelForm):
 
 
 class ProfileEditForm(forms.ModelForm):
-    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    date_of_birth = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = Profile

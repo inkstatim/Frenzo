@@ -79,13 +79,13 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.postgresql',
 
-        'NAME': local_settings.name_bd,  # имя бд (у меня по умолнчанию)
+        'NAME': local_settings.name_bd,  # имя бд
 
-        'USER': local_settings.user_bd,  # имя пользователя (у меня по умолнчанию)
+        'USER': local_settings.user_bd,  # имя пользователя
 
         'PASSWORD': local_settings.password_bd,  # пароль при входе в субд
 
-        'HOST': local_settings.host_bd,  # тут по документации django можно оставить пустым или localhost
+        'HOST': local_settings.host_bd,  # можно оставить пустым или localhost
 
         'PORT': local_settings.port_bd
     }
@@ -139,7 +139,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend', 'account.authentication.EmailAuthBackend', ]
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
+                           'account.authentication.EmailAuthBackend', ]
 
 if DEBUG:
     import mimetypes
