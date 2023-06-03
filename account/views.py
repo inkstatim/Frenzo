@@ -211,7 +211,13 @@ class ConversationView(LoginRequiredMixin, View):
 
 class ChatListView(LoginRequiredMixin, View):
     def get(self, request):
-        conversations = User.objects.exclude(id=request.user.id)
+        conversations = User.objects.exclude(
+            id=request.user.id
+        ).filter(
+            Q(sent_messages__recipient=request.user) |
+            Q(received_messages__sender=request.user)
+        ).distinct()
+
         return render(request, 'account/chat_list.html', {'conversations': conversations})
 
 
