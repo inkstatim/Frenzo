@@ -46,7 +46,7 @@
                     <a href="{% url 'profile' username=request.user.username %}">My Profile</a>
                 </li>
                 <li {% if section == "chat" %}class="selected"{% endif %}>
-                    <a href="#">Chat</a>
+                    <a href="{% url 'chat_list' %}">Chat</a>
                 </li>
                 <li {% if section == "followers" %}class="selected"{% endif %}>
                     <a href="{% url "followers" user.username %}">Followers</a>
