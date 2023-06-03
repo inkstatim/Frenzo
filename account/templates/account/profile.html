@@ -1,56 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{{ user.username }}
-        <form method="post" action="{% url 'conversation' recipient_id=user.id %}">
-            {% csrf_token %}
-            <button type="submit">Send Message</button>
-        </form>
-    </h1>
-    <p>Date of Birth: {{ user.profile.date_of_birth }}</p>
-    <p>First Name: {{ user.first_name }}</p>
-    <p>Last Name: {{ user.last_name }}</p>
-    {% if user.profile.photo %}
-        <img src="{{ user.profile.photo.url }}" alt="Profile Photo" width="300" height="auto">
-    {% endif %}
-
-    {% if user != request.user %}
-        {% if user in request.user.profile.following.all %}
-            <form method="post" action="{% url 'follow' user.username %}">
-                {% csrf_token %}
-                <button type="submit">Unfollow</button>
-            </form>
-        {% else %}
-            <form method="post" action="{% url 'follow' user.username %}">
-                {% csrf_token %}
-                <button type="submit">Follow</button>
-            </form>
-        {% endif %}
-
-        <br>
-        {% if request.user.profile in user.profile.followers_requests.all %}
-            <p>Friendship request received</p>
-            <form method="post" action="{% url 'accept_friend_request' request.user.id %}">
-                {% csrf_token %}
-                <button type="submit">Accept friend request</button>
-            </form>
-            <form method="post" action="{% url 'reject_friend_request' request.user.id %}">
-                {% csrf_token %}
-                <button type="submit">Reject friend request</button>
-            </form>
-        {% else %}
-            <form method="post" action="{% url 'send_friend_request' user.id %}">
-                {% csrf_token %}
-                <button type="submit">Send friend request</button>
-            </form>
-        {% endif %}
-
-
-            <br>
+    <div class="profile-section">
+        {% if user != request.user %}
+            <h2>{{ user.username }}</h2>
             <form method="post" action="{% url 'conversation' recipient_id=user.id %}">
                 {% csrf_token %}
-                <button type="submit">Send Message</button>
+                <button class="message-button" type="submit">Send Message</button>
             </form>
+        {% else %}
+            <h3>
+                <a href="{% url "edit" %}">Edit Profile</a> or <a href="{% url "password_change" %}">Change Password</a>
+            </h3>
+        {% endif %}
 
-    {% endif %}
+        <div class="profile-info">
+            <p><strong>Date of Birth:</strong> {{ user.profile.date_of_birth }}</p>
+            <p><strong>First Name:</strong> {{ user.first_name }}</p>
+            <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+            <p><strong>Followers:</strong> {{ user.profile.followers.count }}</p>
+            <p><strong>Following:</strong> {{ user.profile.following.count }}</p>
+        </div>
+
+        {% if user.profile.photo %}
+            <img class="profile-photo" src="{{ user.profile.photo.url }}" alt="Profile Photo">
+        {% endif %}
+
+        {% if user != request.user %}
+            <div class="profile-buttons">
+                {% if user in request.user.profile.following.all %}
+                    <form method="post" action="{% url 'follow' user.username %}">
+                        {% csrf_token %}
+                        <button class="unfollow-button" type="submit">Unfollow</button>
+                    </form>
+                {% else %}
+                    <form method="post" action="{% url 'follow' user.username %}">
+                        {% csrf_token %}
+                        <button class="follow-button" type="submit">Follow</button>
+                    </form>
+                {% endif %}
+                <form method="post" action="{% url 'send_friend_request' user.id %}">
+                    {% csrf_token %}
+                    <button class="friend-request-button" type="submit">Send Friend Request</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
