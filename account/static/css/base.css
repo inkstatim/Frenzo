@@ -362,8 +362,8 @@ img.user-detail {
 }
 
 .post-photo {
-    max-width: 350px;
-    max-height: 300px;
+    max-width: 700px;
+
 }
 
 .comment {
@@ -434,10 +434,89 @@ img.user-detail {
     background-color: #e6ecf0;
 }
 
+.sidebar-menu li a:hover {
+  color: orange;
+}
+
 #content-acc {
     margin-left: 250px; /* Ширина sidebar */
     margin-right: 0;
     padding: 20px;
     margin-top: 50px; /* Размер отступа сверху для контента */
     background-color: #fff;
+}
+
+
+.friend-list-horizontal-view {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.friend-card {
+    flex: 0 0 25%;
+    margin: 10px;
+    text-align: center;
+}
+
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.profile-section h2 {
+    margin-bottom: 10px;
+}
+
+.profile-section h3 {
+    margin-bottom: 20px;
+}
+
+.profile-section .profile-info {
+    margin-bottom: 20px;
+}
+
+.profile-section p {
+    margin-bottom: 10px;
+}
+
+.profile-section .profile-photo-detail {
+    max-width: 500px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.profile-section .profile-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.profile-section .profile-buttons form {
+    margin: 0 5px;
+}
+
+.profile-section .profile-buttons button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.profile-section .profile-buttons .unfollow-button {
+    background-color: #650101;
+    color: #fff;
+}
+
+.profile-section .profile-buttons .follow-button {
+    background-color: #0f500f;
+    color: #fff;
+}
+
+.profile-section .profile-buttons .friend-request-button {
+    background-color: #333;
+    color: #fff;
 }
