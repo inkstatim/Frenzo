@@ -43,5 +43,7 @@ urlpatterns = [
     path('following/<str:username>/',
          views.FollowingView.as_view(),
          name='following'),
+    path('chat/', views.ChatListView.as_view(),
+         name='chat_list'),
 
 ]
