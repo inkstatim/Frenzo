@@ -23,7 +23,7 @@
         </div>
 
         {% if user.profile.photo %}
-            <img class="profile-photo" src="{{ user.profile.photo.url }}" alt="Profile Photo">
+            <img class="profile-photo-detail" src="{{ user.profile.photo.url }}" alt="Profile Photo">
         {% endif %}
 
         {% if user != request.user %}
