@@ -45,8 +45,9 @@ class DashboardView(LoginRequiredMixin, View):
         for post in posts:
             comments[post.id] = Comment.objects.filter(post=post)[:3]
 
-        return render(request, 'account/dashboard.html', {'posts': posts, 'comment_form': comment_form, 'comments': comments})
-
+        return render(request, 'account/dashboard.html',
+                      {'posts': posts, 'comment_form': comment_form,
+                       'comments': comments})
 
 
 class UserRegistrationView(View):
@@ -206,6 +207,12 @@ class ConversationView(LoginRequiredMixin, View):
         return render(request, 'account/conversation.html',
                       {'recipient': recipient, 'messages': messages,
                        'form': form})
+
+
+class ChatListView(LoginRequiredMixin, View):
+    def get(self, request):
+        conversations = User.objects.exclude(id=request.user.id)
+        return render(request, 'account/chat_list.html', {'conversations': conversations})
 
 
 class FollowersView(LoginRequiredMixin, View):
