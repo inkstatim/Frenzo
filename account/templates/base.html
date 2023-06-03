@@ -42,7 +42,9 @@
     {% if user.is_authenticated %}
         <div id="sidebar">
             <ul class="sidebar-menu">
-
+                <li>
+                    <a href="{% url 'profile' username=request.user.username %}">My Profile</a>
+                </li>
                 <li {% if section == "chat" %}class="selected"{% endif %}>
                     <a href="#">Chat</a>
                 </li>
@@ -51,6 +53,12 @@
                 </li>
                 <li {% if section == "following" %}class="selected"{% endif %}>
                     <a href="{% url "following" user.username %}">Following</a>
+                </li>
+                <li>
+                    <a href="{% url "edit" %}">Edit Profile</a>
+                </li>
+                <li>
+                    <a href="{% url "password_change" %}">Change Password</a>
                 </li>
             </ul>
         </div>
