@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Chat List</h2>
+    <ul>
+        {% for conversation in conversations %}
+            <li><a href="{% url 'conversation' conversation.id %}">{{ conversation.username }}</a></li>
+        {% empty %}
+            <li>No conversations available.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
