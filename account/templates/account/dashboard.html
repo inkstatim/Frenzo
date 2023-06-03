@@ -1,12 +1,68 @@
-{% extends "base.html" %}
-
-{% block title %}Dashboard{% endblock %}
+{% extends 'base.html' %}
 
 {% block content %}
     <h1>Dashboard</h1>
-    <p>Welcome to your dashboard. You can <a href="{% url 'edit' %}">edit your profile</a>
-        or <a href="{% url 'password_change' %}">change your password</a>.</p>
-    <p>You can also <a href="{% url "edit" %}">edit your profile</a> or <a href="{% url "password_change" %}">
-        change your password</a>.
-    </p>
+    <h2>Posts from Users You Follow</h2>
+    {% for post in posts %}
+        <div class="post">
+            <h3><a href="{% url 'posts:post_detail' post.pk %}">{{ post.title }}</a></h3>
+            <p class="date"> Published {{ post.created_at }} by {{ post.author }} </p>
+            <p>{{ post.content }}</p>
+            <p>{% if post.photo %}
+                <img src="{{ post.photo.url }}" alt="Post Photo" class="post-photo" width="300" height="auto">
+            {% endif %}</p>
+            <p>Likes: {{ post.likes.count }}</p>
+            <form method="post" action="{% url 'posts:like_post' post.id %}">
+                {% csrf_token %}
+                <button type="submit">
+                    {% if request.user in post.likes.all %}
+                        Unlike
+                    {% else %}
+                        Like
+                    {% endif %}
+                </button>
+            </form>
+            <form method="post" action="{% url 'posts:comment_create' post.id %}">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit">Add Comment</button>
+            </form>
+            <h4>Comments:</h4>
+            {% for comment in post.get_display_comments %}
+                <div class="comment">
+                    <div class="comment-header">
+                        <p class="comment-author">{{ comment.author }}</p>
+                    </div>
+                    <div class="comment-content">
+                        <p>{{ comment.content }}</p>
+                    </div>
+                </div>
+                <hr class="comment-separator">
+            {% empty %}
+                <p>No comments yet.</p>
+            {% endfor %}
+        </div>
+        <hr class="separator">
+    {% empty %}
+        <p>No posts available.</p>
+    {% endfor %}
+    <p>You can <a href="{% url 'edit' %}">edit your profile</a> or <a href="{% url 'password_change' %}">change your password</a>.</p>
 {% endblock %}
+
+
+
+
+
+
+{#{% extends "base.html" %}#}
+{##}
+{#{% block title %}Dashboard{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#    <h1>Dashboard</h1>#}
+{#    <p>Welcome to your dashboard. You can <a href="{% url 'edit' %}">edit your profile</a>#}
+{#        or <a href="{% url 'password_change' %}">change your password</a>.</p>#}
+{#    <p>You can also <a href="{% url "edit" %}">edit your profile</a> or <a href="{% url "password_change" %}">#}
+{#        change your password</a>.#}
+{#    </p>#}
+{#{% endblock %}#}
